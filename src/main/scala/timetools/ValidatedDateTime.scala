@@ -4,9 +4,9 @@ import cats._
 import cats.data._
 import cats.implicits._
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
-
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import java.util.Date
+
 import scala.util.Try
 
 trait ValidatedDateTime[A] extends DateTimeWrapper[A] with Validating[DateTime] {
@@ -34,7 +34,7 @@ object ValidatedDateTime {
   }
 
   implicit class StringDateTime(date: String) extends ValidatedDateTime[String] {
-    lazy val yyyyMMddFormatter = DateTimeFormat.forPattern("yyyyMMdd")
+    lazy val yyyyMMddFormatter: DateTimeFormatter = DateTimeFormat.forPattern("yyyyMMdd")
     override val originValue: String = date
     override lazy val dateValue: DateTime = date match {
       case x if x.length == 8 => yyyyMMddFormatter.parseDateTime(x)

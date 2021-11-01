@@ -16,8 +16,8 @@ object Test extends App {
 
 
   //def lambda(in: SaleDetails): Boolean = in.amount > 5000
-  val transfered = listOfSaleDetails.map(_.amount).filter(_ > 5000)
-  println(transfered)
+  val transferred = listOfSaleDetails.map(_.amount).filter(_ > 5000)
+  println(transferred)
 
 //  println(s"Number of deals over 5000 is ${listOfSaleDetails.count(_.amount > 5000)}")
 //  println(s"Max amount deal is ${listOfSaleDetails.map(_.amount).max}")
