@@ -3,12 +3,26 @@ import binarytreetools.Node
 object Test extends App {
 
 
-  val tree = Node("1", Node("2", Node("4"), Node("5")), Node("3"))
+  //val tree = Node("1", Node("2", Node("4"), Node("5")), Node("3"))
+  //val tree = Node("1", Node("2", Node("2.1"), Node("2.2")), Node("3"))
+  //val tree = Node("1", Node("123"), Node("456"))
+  //val tree = Node("1", null, Node("2", null, Node("3")))
+  //val tree = Node("1", Node("2", Node("3"), null), null)
+  val tree = Node("1", Node("2", Node("4"), Node("5")), Node("3", Node("0", Node("9"), null), Node("6", Node("7"), null)))
   import binarytreetools.Actions._
 
-  println(tree.listAllNodes[Vector](DsfOrders.Inorder,
+  println(tree.dsfTreeTraverse[Vector, String](DsfOrders.Inorder,
     (node, result) => result :+ node.value
   ).mkString(","))
+
+  println(tree.dsfTreeTraverse[Option, String](DsfOrders.Postorder,
+    (node, result) => result match {
+      case None => Option(node.value)
+      case Some(max) => if (node.value > max) Option(node.value) else Option(max)
+    }
+  ))
+
+  val value: Unit = tree.prettyPrint()
 }
 
 
