@@ -14,8 +14,8 @@ object Actions {
 
   trait TreeOps[A] {
     implicit val aTag: ClassTag[A]
-    protected def dsfTreeTraverse[F[_], B](tree: Node[A], order: DsfOrder, processNode: (Node[A], F[B]) => F[B])
-                                (implicit emptyContainer: MonoidK[F]): F[B] = {
+    protected def dsfTraverse[F[_], B](tree: Node[A], order: DsfOrder, processNode: (Node[A], F[B]) => F[B])
+                                      (implicit emptyContainer: MonoidK[F]): F[B] = {
       def dsf(tree: Node[A], order: DsfOrder, result: F[B]): F[B] = {
         if (tree == null) result
         else {
@@ -43,8 +43,8 @@ object Actions {
     }
 
 
-    protected def childrenSearchFirst[F[_], B](tree: Node[A], processNode: (Node[A], F[B], F[B]) => F[B])
-                              (implicit emptyContainer: MonoidK[F]): F[B] = {
+    protected def dsfPostOrderSearch[F[_], B](tree: Node[A], processNode: (Node[A], F[B], F[B]) => F[B])
+                                             (implicit emptyContainer: MonoidK[F]): F[B] = {
       def searchChild(tree: Node[A]): F[B] = {
         if (tree == null) emptyContainer.empty
         else {
@@ -56,22 +56,18 @@ object Actions {
       }
       searchChild(tree)
     }
-
-    //protected def prettyPrint(tree: Node[A]): Vector[String] = {
-
-    //}
   }
 
   implicit class ExtendNodeOps[A: ClassTag](tree: Node[A]) extends TreeOps[A] {
     override val aTag: ClassTag[A] = implicitly[ClassTag[A]]
-    def dsfTreeTraverse[F[_], B](order: DsfOrder, listProcess: (Node[A], F[B]) => F[B])(implicit f: MonoidK[F]): F[B] =
-      dsfTreeTraverse[F, B](tree, order, listProcess)
+    def dsfTraverse[F[_], B](order: DsfOrder, listProcess: (Node[A], F[B]) => F[B])(implicit f: MonoidK[F]): F[B] =
+      dsfTraverse[F, B](tree, order, listProcess)
 
-    def childrenSearchFirst[F[_], B](listProcess: (Node[A], F[B], F[B]) => F[B])(implicit f: MonoidK[F]): F[B] =
-      childrenSearchFirst[F, B](tree, listProcess)
+    def dsfPostOrderSearch[F[_], B](listProcess: (Node[A], F[B], F[B]) => F[B])(implicit f: MonoidK[F]): F[B] =
+      dsfPostOrderSearch[F, B](tree, listProcess)
 
     def prettyPrint(): Unit = {
-      childrenSearchFirst[Vector, String]( tree,
+      dsfPostOrderSearch[Vector, String]( tree,
         (node: Node[A], leftResult: Vector[String], rightResult: Vector[String]) => {
           if (leftResult.isEmpty && rightResult.isEmpty) {
             Vector(node.value +  " ")
