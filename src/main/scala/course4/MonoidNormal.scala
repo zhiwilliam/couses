@@ -7,8 +7,8 @@ object MonoidNormal extends App {
   case class CAD(amount: BigDecimal) extends AnyVal
 
   implicit val CADMonoid: Monoid[CAD] = new Monoid[CAD] {
-    def combine(a1: CAD, a2: CAD): CAD =
-      CAD(a1.amount + a2.amount)
+    def combine(a1: CAD, a2: CAD): CAD = CAD(a1.amount + a2.amount)
+
     def empty: CAD = CAD(0)
   }
 

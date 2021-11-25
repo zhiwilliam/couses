@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="demo.uri">http://localhost:8080/</entry>
+    <entry key="demo.query">config</entry>
+</properties>
