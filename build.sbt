@@ -41,9 +41,9 @@ val configDependencies = List(
   "dev.zio" %% "zio-config-refined" % zioConfigVersion,
   "dev.zio" %% "zio-config-typesafe" % zioConfigVersion,
   "org.apache.httpcomponents" % "httpasyncclient" % "4.1.3"
-).map(_ excludeAll(
+).map(_ excludeAll
   ExclusionRule("zio")
-  ))
+  )
 
 val zioVersion = "1.0.3"
 libraryDependencies += "dev.zio" %% "zio-streams" % zioVersion
@@ -68,7 +68,7 @@ libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-blaze-client" % http4sVersion
 )
 
-libraryDependencies += "dev.zio" %% "zio-redis" % "0.0.0+106-b40713b3+20201122-0748-SNAPSHOT"
+//libraryDependencies += "dev.zio" %% "zio-redis" % "0.0.0+106-b40713b3+20201122-0748-SNAPSHOT"
 libraryDependencies ++= Seq(
   "ch.qos.logback"       % "logback-classic"          % "1.2.3",
   "net.logstash.logback" % "logstash-logback-encoder" % "6.4"
