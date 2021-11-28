@@ -1,4 +1,5 @@
 package course6.tools
+/*
 
 import zio._
 import zio.redis._
@@ -18,3 +19,4 @@ package object zioredis {
 
   val executor = RedisExecutor.live("127.0.0.1", 6379)
 }
+*/

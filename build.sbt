@@ -17,6 +17,8 @@ libraryDependencies += "co.fs2" %% "fs2-io" % "3.2.2"
 libraryDependencies += "org.gnieh" %% "fs2-data-csv" % "1.3.0"
 libraryDependencies += "org.gnieh" %% "fs2-data-csv-generic" % "1.3.0"
 
+addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
+
 scalacOptions ++= Seq(
   "-feature",
   "-deprecation",
