@@ -1,6 +1,7 @@
 package course8
 
 object ValidatorExample extends App {
+  case class Deliver(item: String, address: Address)
   case class Profile(id: String, address: Address)
   case class Address(streetLine1: String, streetLine2: String, country: String)
 
@@ -28,12 +29,16 @@ object ValidatorExample extends App {
   implicit val additionalKeyInfo: Profile => String = p =>s"ID is ${p.id}"
   val validateProfile = validateAddress.lift[Profile](_.address, "address")
 
+  val validateDeliver = validateAddress.lift[Deliver](_.address, "address")
+
   println(validateProfile.validate(Profile("12",
     Address(null, "line2", "some super long string that cannot be a country code."))))
 
   println(validateProfile.validate(Profile("12",
     Address("line2", "line2", "some super long string that cannot be a country code."))))
 
+  println(validateDeliver.validate(Deliver("tool",
+    Address("line2", "line2", null))))
 
 
 }
