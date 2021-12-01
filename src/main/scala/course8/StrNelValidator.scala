@@ -71,17 +71,25 @@ object StrNelValidator {
         }
     }
 
+    override def <<+(other: Validator[StrNel, A]): Validator[StrNel, A] = new Validator[StrNel, A] {
+      override lazy val valueName: String = validator.valueName
+
+      override def validate(value: A)(implicit ae: ApplicativeError[StrNel, String]): StrNel[A] = {
+        validator.validate(value) <+> other.validate(value)
+      }
+    }
+
     override def <+>(other: Validator[StrNel, A]): Validator[StrNel, A] = new Validator[StrNel, A] {
       override lazy val valueName: String = validator.valueName
 
-      override def validate(value: A)(implicit ae: ApplicativeError[StrNel, String]): StrNel[A] =
-        validator.validate(value) match {
-          case Valid(_) => other.validate(value)
-          case Invalid(e) => other.validate(value) match {
-            case Valid(_) => Invalid(e)
-            case Invalid(e1) => Invalid(e |+| e1)
-          }
+      override def validate(value: A)(implicit ae: ApplicativeError[StrNel, String]): StrNel[A] = {
+        (validator.validate(value), other.validate(value)) match {
+          case (Valid(_), Valid(_)) => Valid(value)
+          case (Invalid(e), Valid(_)) => Invalid(e)
+          case (Valid(_), Invalid(e)) => Invalid(e)
+          case (Invalid(e1), Invalid(e2)) => Invalid(e1 |+| e2)
         }
+      }
     }
   }
 }
