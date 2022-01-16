@@ -1,4 +1,5 @@
 package course8
+import cats.ApplicativeError
 
 object ValidatorExample extends App {
   case class Deliver(item: String, address: Address)
