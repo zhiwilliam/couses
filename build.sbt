@@ -118,3 +118,8 @@ lazy val http = {
 }
 libraryDependencies ++= configDependencies ++ http ++ circe
 libraryDependencies += "dev.zio" %% "zio" % zioVersion
+
+libraryDependencies += "eu.timepit" %% "refined" % "0.9.28"
+libraryDependencies += "com.typesafe.play" %% "play" % "2.8.13"
+libraryDependencies += "be.venneborg" % "play28-refined_2.13" % "0.6.0"
+
