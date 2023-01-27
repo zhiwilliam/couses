@@ -1,5 +1,7 @@
 package course3
 
+import scala.reflect.ClassTag
+
 trait TraversableGeneric[F[_], A] {
   def isEmpty: Boolean
   def nonEmpty: Boolean = !isEmpty

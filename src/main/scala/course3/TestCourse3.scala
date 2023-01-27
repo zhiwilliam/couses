@@ -1,6 +1,6 @@
 package course3
 
-object Test extends App {
+object TestCourse3 extends App {
   val value = Map("a" -> List(1, 2), "b" -> List(2, 3, 4))
   import MapTools.implicits._
   import TraversableGeneric.implicits._
